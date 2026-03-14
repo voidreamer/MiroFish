@@ -91,7 +91,16 @@
       </div>
 
       <div class="action-controls">
-        <button 
+        <button
+          v-if="phase === 1"
+          class="action-btn danger"
+          :disabled="isStopping"
+          @click="handleStopSimulation"
+        >
+          <span v-if="isStopping" class="loading-spinner-small"></span>
+          {{ isStopping ? 'Stopping...' : 'Stop Simulation' }}
+        </button>
+        <button
           class="action-btn primary"
           :disabled="phase !== 2 || isGeneratingReport"
           @click="handleNextStep"
@@ -891,6 +900,15 @@ onUnmounted(() => {
 
 .action-btn.primary:hover:not(:disabled) {
   background: #333;
+}
+
+.action-btn.danger {
+  background: #dc2626;
+  color: #FFF;
+}
+
+.action-btn.danger:hover:not(:disabled) {
+  background: #b91c1c;
 }
 
 .action-btn:disabled {
